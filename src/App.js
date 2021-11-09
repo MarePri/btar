@@ -1,36 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+} from "react-router-dom";
+import Tab from './comp/tab';
+import Home from './pages/Home'
+import About from './pages/About';
+import Features from './pages/Features';
 import './App.css';
 
-function Tab ({children}) {
-
-  const [highlightStyle, setHighlightStyle] = useState({left : 0, opacity: 0});
-
-  function moveHighlight(e) { 
-    setHighlightStyle({
-      left: e.nativeEvent.layerX - 150,
-    })   
-    
-  }
-
-  function hideHighlight(e) {
-    setHighlightStyle({
-      opacity: 0,
-      left: e.nativeEvent.layerX - 150,
-    })
-  }
-
-
-
-  return (
-    <div className="tab" onMouseOut={hideHighlight} onMouseMove={moveHighlight}>
-      <div className="highlight" style={highlightStyle} />
-      {children}
-    </div>
-  )
-}
 
 function App() {
   return (
+   <Router>
     <div className="app">
       <div className="browser">
         <div className="tabs">
@@ -42,13 +26,24 @@ function App() {
           </Tab>
           <Tab> 
             <a>Features</a> 
-          </Tab>
-         
+          </Tab>      
         </div>
 
-        <div className="viewport">Pages Go Here</div>
+        <div className="viewport">
+          <Route path="/">
+            <Home />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/features">
+            <Features />
+          </Route>
+        </div>
       </div>
     </div>
+    
+   </Router>
   );
 }
 
